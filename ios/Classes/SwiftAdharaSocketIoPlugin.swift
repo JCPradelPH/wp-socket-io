@@ -52,6 +52,14 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
                         result(FlutterError(code: "403", message: "Instance not found", details: nil))
                     }
                 }
+            case "clearAll":
+                var i = 0
+                while (i < currentIndex){
+                    instances[i]?.socket.disconnect()
+                    instances[i] = nil
+                    i += 1
+                }
+                result(nil);
             default:
                 result(FlutterError(code: "404", message: "No such method", details: nil))
         }

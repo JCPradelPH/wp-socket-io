@@ -24,4 +24,10 @@ class SocketIOManager {
     await _channel.invokeMethod('clearInstance', {'id': socket.id});
     _sockets.remove(socket.id);
   }
+
+  Future clearAll() async {
+      await _channel.invokeMethod('clearAll', {});
+      _sockets.clear();
+  }
+
 }
