@@ -44,9 +44,12 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
                     result(FlutterError(code: "400", message: "Invalid instance identifier provided", details: nil))
                 }else{
                     let socketIndex = arguments["id"] as! Int
-                    if (instances[socketIndex] != nil) {
-                        instances[socketIndex]?.socket.disconnect()
-                        instances[socketIndex] = nil;
+                    if (instances.count > socketIndex) {
+                        adharaSocket = instances[socketIndex];
+                        instances = instances.filter({ (_ socket: AdharaSocket) -> Bool in
+                            socket != adharaSocket;
+                        })
+                        adharaSocket.socket.disconnect()
                         result(nil)
                     } else {
                         result(FlutterError(code: "403", message: "Instance not found", details: nil))
