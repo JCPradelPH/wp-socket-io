@@ -53,11 +53,15 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
                     }
                 }
             case "clearAll":
+                print("clearAll------")
+                print(currentIndex)
                 var i = 0
                 while (i < currentIndex){
                     instances[i]?.socket.disconnect()
                     instances[i] = nil
                     i += 1
+                    print("disconnected socket")
+                    print(i)
                 }
                 result(nil);
             default:
