@@ -49,6 +49,7 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
                         instances[socketIndex] = nil;
                         result(nil)
                     } 
+                    result(nil)
                     // else {
                     //     result(FlutterError(code: "403", message: "Instance not found", details: nil))
                     // }
