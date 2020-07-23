@@ -47,9 +47,9 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
                     if (instances[socketIndex] != nil) {
                         instances[socketIndex]?.socket.disconnect()
                         instances[socketIndex] = nil;
-                        result(nil)
+                        result("successfully disconnected socket")
                     } 
-                    result(nil)
+                    result("socket instance not found")
                     // else {
                     //     result(FlutterError(code: "403", message: "Instance not found", details: nil))
                     // }
