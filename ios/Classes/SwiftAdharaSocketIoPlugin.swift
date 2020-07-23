@@ -26,7 +26,7 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
 
         switch (call.method) {
             case "newInstance":
-                let newIndex = arguments["id"];
+                let newIndex = arguments["id"]
                 let config:AdharaSocketIOClientConfig
                     = AdharaSocketIOClientConfig(newIndex, uri: arguments["uri"] as! String,
                                                  namespace: arguments["namespace"] as! String, path: arguments["path"] as! String)
@@ -46,7 +46,7 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
                     let socketIndex = arguments["id"] as! Int
                     if (instances[socketIndex] != nil) {
                         instances[socketIndex]?.socket.disconnect()
-                        instances[socketIndex] = nil;
+                        instances[socketIndex] = nil
                         result("successfully disconnected socket")
                     } 
                     result("socket instance not found")
