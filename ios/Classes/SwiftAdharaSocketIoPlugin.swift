@@ -44,7 +44,7 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
                     result(FlutterError(code: "400", message: "Invalid instance identifier provided", details: nil))
                 }else{
                     let socketIndex = arguments["id"] as! Int
-                    if (instances[socketIndex] != nil) {
+                    if (instances[socketIndex] != nil && instances.size > 1) {
                         instances[socketIndex]?.socket.disconnect()
                         instances[socketIndex] = nil
                         result("successfully disconnected socket")
