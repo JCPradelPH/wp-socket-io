@@ -18,6 +18,7 @@ class SocketOptions {
 
   ///Path parameter if socket.io runs on a different endpoint
   String path;
+  int id;
 
 //  public boolean forceNew;
 //          /**
@@ -51,6 +52,7 @@ class SocketOptions {
       this.enableLogging: false,
       this.transports: const [Transports.WEB_SOCKET, Transports.POLLING],
       this.nameSpace = "/",
+      this.id = 0,
       this.path = '/socket.io'})
       : assert(nameSpace.startsWith("/"),
             "Namespace must be a non null string and should start with a '/'");
@@ -60,6 +62,7 @@ class SocketOptions {
       "uri": uri,
       "query": query,
       "path": path,
+      "id": id,
       "enableLogging": enableLogging,
       "namespace": nameSpace,
       "transports": transports.map((Transports t) {

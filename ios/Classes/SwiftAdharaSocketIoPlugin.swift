@@ -26,7 +26,7 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
 
         switch (call.method) {
             case "newInstance":
-                let newIndex = currentIndex;
+                let newIndex = arguments["id"];
                 let config:AdharaSocketIOClientConfig
                     = AdharaSocketIOClientConfig(newIndex, uri: arguments["uri"] as! String,
                                                  namespace: arguments["namespace"] as! String, path: arguments["path"] as! String)
