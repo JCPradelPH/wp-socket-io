@@ -48,9 +48,10 @@ public class SwiftAdharaSocketIoPlugin: NSObject, FlutterPlugin {
                         instances[socketIndex]?.socket.disconnect()
                         instances[socketIndex] = nil;
                         result(nil)
-                    } else {
-                        result(FlutterError(code: "403", message: "Instance not found", details: nil))
-                    }
+                    } 
+                    // else {
+                    //     result(FlutterError(code: "403", message: "Instance not found", details: nil))
+                    // }
                 }
             case "clearAll":
                 print("clearAll------")
