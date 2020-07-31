@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
@@ -46,6 +47,12 @@ class AdharaSocket implements MethodCallHandler {
         this.options = options;
         log("Connecting to... "+options.uri);
         socket = AdharaSocket.manager.socket(options.namespace);
+        socket.on("calling", new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                System.out.println("CALLING EVENT");
+            }
+        });
     }
 
     static AdharaSocket getInstance(Registrar registrar, Options options) throws URISyntaxException{
