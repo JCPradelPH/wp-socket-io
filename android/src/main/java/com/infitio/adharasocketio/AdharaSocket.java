@@ -1,8 +1,14 @@
 package com.infitio.adharasocketio;
 
+import android.app.Activity;
+import android.app.KeyguardManager;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.WindowManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,11 +36,12 @@ import io.socket.emitter.Emitter;
 
 class AdharaSocket implements MethodCallHandler {
 
-    final Socket socket;
+    static Socket socket;
     private final MethodChannel channel;
     private static final String TAG = "Adhara:Socket";
     private Options options;
     private static Manager manager;
+    private static Activity act;
 
     private void log(String message){
         if(this.options.enableLogging){
@@ -42,26 +49,34 @@ class AdharaSocket implements MethodCallHandler {
         }
     }
 
-    private AdharaSocket(MethodChannel channel, Options options) {
+    private AdharaSocket(MethodChannel channel, Options options, Activity activity) {
         this.channel = channel;
         this.options = options;
+
         log("Connecting to... "+options.uri);
         socket = AdharaSocket.manager.socket(options.namespace);
+
+    }
+
+    static AdharaSocket getInstance(Registrar registrar, Options options, Activity activity) throws URISyntaxException{
+        final MethodChannel channel = new MethodChannel(registrar.messenger(), "adhara_socket_io:socket:"+String.valueOf(options.index));
+        // we create new manager instance every time here
+        // because manager cannot update the uri
+        act = activity;
+        AdharaSocket.manager = new Manager(new URI(options.uri), options);
+        AdharaSocket _socket = new AdharaSocket(channel, options, act);
+        channel.setMethodCallHandler(_socket);
         socket.on("calling", new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
                 System.out.println("CALLING EVENT");
+                Intent intent = new Intent("android.intent.category.LAUNCHER");
+                intent.setClassName("com.your.package", "com.your.package.MainActivity");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                act.startActivity(intent);
+
             }
         });
-    }
-
-    static AdharaSocket getInstance(Registrar registrar, Options options) throws URISyntaxException{
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "adhara_socket_io:socket:"+String.valueOf(options.index));
-        // we create new manager instance every time here
-        // because manager cannot update the uri
-        AdharaSocket.manager = new Manager(new URI(options.uri), options);
-        AdharaSocket _socket = new AdharaSocket(channel, options);
-        channel.setMethodCallHandler(_socket);
         return _socket;
     }
 
