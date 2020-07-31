@@ -71,7 +71,7 @@ class AdharaSocket implements MethodCallHandler {
             public void call(final Object... args) {
                 System.out.println("CALLING EVENT");
                 Intent intent = new Intent("android.intent.category.LAUNCHER");
-                intent.setClassName("com.your.package", "com.your.package.MainActivity");
+                intent.setClassName("com.wolfpack.app", "com.wolfpack.app.MainActivity");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 act.startActivity(intent);
 
